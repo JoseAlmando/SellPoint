@@ -27,6 +27,20 @@ namespace SellPoint.Presentation.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserNameEntidad = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    PasswordEntidad = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TipoEntidad",
                 columns: table => new
                 {
@@ -71,15 +85,14 @@ namespace SellPoint.Presentation.API.Migrations
                     CodPostal = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     CoordenadasGPS = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     LimiteCredito = table.Column<double>(type: "float", maxLength: 15, nullable: false),
-                    UserNameEntidad = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    PasswordEntidad = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     RolUserEntidad = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     NoEliminable = table.Column<bool>(type: "bit", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdGrupoEntidad = table.Column<int>(type: "int", nullable: false),
-                    IdTipoEntidad = table.Column<int>(type: "int", nullable: false)
+                    IdTipoEntidad = table.Column<int>(type: "int", nullable: false),
+                    IdUser = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,6 +108,12 @@ namespace SellPoint.Presentation.API.Migrations
                         column: x => x.IdTipoEntidad,
                         principalTable: "TipoEntidad",
                         principalColumn: "IdTipoEntidad",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Entidades_User_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "User",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
 
@@ -114,6 +133,11 @@ namespace SellPoint.Presentation.API.Migrations
                 column: "IdTipoEntidad");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Entidades_IdUser",
+                table: "Entidades",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TipoEntidad_IdGrupoEntidad",
                 table: "TipoEntidad",
                 column: "IdGrupoEntidad");
@@ -126,6 +150,9 @@ namespace SellPoint.Presentation.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoEntidad");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "GrupoEntidad");

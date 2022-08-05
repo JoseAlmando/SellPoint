@@ -48,10 +48,6 @@ namespace SellPoint.Data.Models
         public string CoordenadasGPS { get; set; }
         [MaxLength(15)]
         public double LimiteCredito { get; set; }
-        [StringLength(60)]
-        public string UserNameEntidad { get; set; }
-        [StringLength(30)]
-        public string PasswordEntidad { get; set; }
         [StringLength(10)]
         public string RolUserEntidad { get; set; }
         public string Comentario { get; set; }
@@ -66,5 +62,9 @@ namespace SellPoint.Data.Models
         [Required]
         [ForeignKey("IdTipoEntidad")]
         public TipoEntidad TipoEntidadModel { get; set; }
+
+        [Required]
+        [ForeignKey("IdUser")]
+        public User User { get; set; }
     }
 }

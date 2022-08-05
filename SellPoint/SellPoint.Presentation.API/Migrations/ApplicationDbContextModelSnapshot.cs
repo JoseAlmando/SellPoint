@@ -62,6 +62,9 @@ namespace SellPoint.Presentation.API.Migrations
                     b.Property<int>("IdTipoEntidad")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
+
                     b.Property<double>("LimiteCredito")
                         .HasMaxLength(15)
                         .HasColumnType("float");
@@ -77,11 +80,6 @@ namespace SellPoint.Presentation.API.Migrations
                     b.Property<long>("NumeroDocumento")
                         .HasMaxLength(15)
                         .HasColumnType("bigint");
-
-                    b.Property<string>("PasswordEntidad")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("RolUserEntidad")
                         .IsRequired()
@@ -133,11 +131,6 @@ namespace SellPoint.Presentation.API.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<string>("UserNameEntidad")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
                     b.HasKey("IdEntidad");
 
                     b.HasIndex("Descripcion");
@@ -145,6 +138,8 @@ namespace SellPoint.Presentation.API.Migrations
                     b.HasIndex("IdGrupoEntidad");
 
                     b.HasIndex("IdTipoEntidad");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Entidades");
                 });
@@ -216,6 +211,29 @@ namespace SellPoint.Presentation.API.Migrations
                     b.ToTable("TipoEntidad");
                 });
 
+            modelBuilder.Entity("SellPoint.Data.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("PasswordEntidad")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("UserNameEntidad")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("SellPoint.Data.Models.Entidades", b =>
                 {
                     b.HasOne("SellPoint.Data.Models.GrupoEntidad", "GrupoEntidad")
@@ -230,9 +248,17 @@ namespace SellPoint.Presentation.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SellPoint.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("GrupoEntidad");
 
                     b.Navigation("TipoEntidadModel");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SellPoint.Data.Models.TipoEntidad", b =>
