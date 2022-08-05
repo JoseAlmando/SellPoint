@@ -16,11 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SellPoint.Bussines\SellPoint.Bussines.csproj" />
     <ProjectReference Include="..\SellPoint.Data\SellPoint.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

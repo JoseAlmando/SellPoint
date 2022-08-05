@@ -78,19 +78,25 @@ namespace SellPoint.Bussines.Services
 
         }
 
-        public async Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate = null, Expression<Func<T, dynamic>> include = null)
+        public async Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate = null, List<string> Entities = null)
         {
-            if (predicate != null && include != null)
+            List<T> data = new();
+            if (predicate != null && Entities != null)
             {
-                return await DbSet.Include(include).Where(predicate).ToListAsync();
+                foreach (var entity in Entities)
+                    data = await DbSet.Include(entity).Where(predicate).ToListAsync();
+                return data;
             }
             if (predicate != null)
             {
+                data = null;
                 return await DbSet.Where(predicate).ToListAsync();
             }
-            if (include != null)
+            if (Entities != null)
             {
-                return await DbSet.Include(include).ToListAsync();
+                foreach (var entity in Entities)
+                    data = await DbSet.Include(entity).ToListAsync();
+                return data;
             }
 
             return await DbSet.ToListAsync();
