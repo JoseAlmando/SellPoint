@@ -26,6 +26,7 @@ namespace SellPoint.Presentation.API.Controllers
         {
             try
             {
+                SearchTermn = SearchTermn == null ? string.Empty : SearchTermn.Trim();
                 var result = await _repoEntidades.GetList(
                     v => v.Descripcion.Contains(SearchTermn) || v.User.UserNameEntidad.Contains(SearchTermn), 
                     x => x.User);
@@ -81,7 +82,7 @@ namespace SellPoint.Presentation.API.Controllers
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> Update(Entidades entidad)
+        public async Task<IActionResult> Update(EntidadesDTO entidad)
         {
             try
             {
@@ -91,7 +92,33 @@ namespace SellPoint.Presentation.API.Controllers
                 }
                 else
                 {
-                    var UpdatedRow = await _repoEntidades.Update(entidad);
+                    var user = await _unitOfWork.Repository<User>().FindWhere(x => x.Id == entidad.IdUser);
+
+                    var UpdateEntidad = new Entidades()
+                    {
+                        IdEntidad = (int)entidad.IdEntidad,
+                        Descripcion = entidad.Descripcion,
+                        Direccion = entidad.Direccion,
+                        Localidad = entidad.Localidad,
+                        TipoEntidad = entidad.TipoEntidad,
+                        TipoDocumento = entidad.TipoDocumento,
+                        NumeroDocumento = entidad.NumeroDocumento,
+                        Telefonos = entidad.Telefonos,
+                        URLPaginaWeb = entidad.URLPaginaWeb,
+                        URLFacebook = entidad.URLFacebook,
+                        URLInstagram = entidad.URLInstagram,
+                        URLTwitter = entidad.URLTwitter,
+                        URLTiktok = entidad.URLTiktok,
+                        CodPostal = entidad.CodPostal,
+                        CoordenadasGPS = entidad.CoordenadasGPS,
+                        LimiteCredito = entidad.LimiteCredito,
+                        RolUserEntidad = entidad.RolUserEntidad,
+                        Comentario = entidad.Comentario,
+                        Status = entidad.Status,
+                        NoEliminable = entidad.NoEliminable,
+                        User = user
+                    };
+                    var UpdatedRow = await _repoEntidades.Update(UpdateEntidad);
                     return Ok(UpdatedRow);
                 }
             }
