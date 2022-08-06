@@ -44,8 +44,6 @@ namespace SellPoint.Presentation.API.Controllers
             {
                 //Get the entities of Entidades to add to model
                 var user = await _unitOfWork.Repository<User>().FindWhere(x => x.Id == entidad.IdUser);
-                //var grupoEntidad = await _unitOfWork.Repository<GrupoEntidad>().FindWhere(x => x.IdGruposEntidad == entidad.IdGrupoEntidad);
-                //var tipoEntidad = await _unitOfWork.Repository<TipoEntidad>().FindWhere(x => x.IdTipoEntidad == entidad.IdTipoEntidad);
 
                 var NewEntidad = new Entidades()
                 {

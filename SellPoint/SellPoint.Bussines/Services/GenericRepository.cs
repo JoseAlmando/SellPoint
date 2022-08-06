@@ -31,7 +31,7 @@ namespace SellPoint.Bussines.Services
             return await DbSet.ToListAsync();
         }
 
-        public async Task<T> GetById<V>(V Id) where V : struct
+        public async Task<T> GetById(Guid Id)
         {
             return await DbSet.FindAsync(Id);
         }
@@ -66,12 +66,12 @@ namespace SellPoint.Bussines.Services
 
             if (predicate != null && properties != null)
             {
-                AddRageEntities();
+                AddRangeEntitiesDelete();
                 return await Data.FirstOrDefaultAsync();
             }
             if (properties != null)
             {
-                AddRageEntities();
+                AddRangeEntitiesDelete();
                 return await Data.FirstOrDefaultAsync();
             }
             if (predicate != null)
@@ -81,7 +81,7 @@ namespace SellPoint.Bussines.Services
   
             return await DbSet.FirstOrDefaultAsync();
 
-            void AddRageEntities()
+            void AddRangeEntitiesDelete()
             {
                 foreach (var property in properties)
                 {
@@ -100,22 +100,22 @@ namespace SellPoint.Bussines.Services
             bool isPredicateAndInclude = predicate != null && properties != null;
             if (isPredicateAndInclude)
             {
-                AddRageEntities();
+                AddRangeEntitiesDelete();
                 return Data;
             }
             if (properties != null)
             {
-                AddRageEntities();
+                AddRangeEntitiesDelete();
                 return Data;
             }
             if (predicate != null)
             {
                 return await DbSet.Where(predicate).ToListAsync();
             }
-
+            
             return await DbSet.ToListAsync();
 
-            void AddRageEntities()
+            void AddRangeEntitiesDelete()
             {
                 foreach (var property in properties)
                 {
@@ -125,7 +125,6 @@ namespace SellPoint.Bussines.Services
                         Data = DbSet.Include($"{regex.Replace(property.Body.ToString(), "")}");
                 }
             }
-
 
         }
 
