@@ -12,7 +12,7 @@ namespace SellPoint.Data.Models
         public int Id { get; set; }
         [StringLength(60)]
         public string UserNameEntidad { get; set; }
-        [StringLength(30)]
+        [StringLength(255)]
         public string PasswordEntidad { get; set; }
     }
 }
