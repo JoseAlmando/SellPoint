@@ -37,7 +37,7 @@ namespace SellPoint.Presentation.API.Controllers
             }
         }
 
-        [HttpGet("Create")]
+        [HttpPost("Create")]
         public async Task<IActionResult> Insert([FromBody] EntidadesDTO entidad)
         {
             try

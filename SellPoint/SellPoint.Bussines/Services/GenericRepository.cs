@@ -31,7 +31,7 @@ namespace SellPoint.Bussines.Services
             return await DbSet.ToListAsync();
         }
 
-        public async Task<T> GetById(Guid Id)
+        public async Task<T> GetById<V>(V Id) where V : struct
         {
             return await DbSet.FindAsync(Id);
         }
@@ -62,14 +62,14 @@ namespace SellPoint.Bussines.Services
         {
             IQueryable<T> Data = null;
             System.Text.RegularExpressions.Regex regex = new(@"^\w+[.]");
-            bool isPredicateAndInclude = predicate != null && properties != null;
+            bool isPredicateAndInclude = predicate != null && properties.Length > 0;
 
-            if (predicate != null && properties != null)
+            if (isPredicateAndInclude)
             {
                 AddRangeEntitiesDelete();
                 return await Data.FirstOrDefaultAsync();
             }
-            if (properties != null)
+            if (properties.Length > 0)
             {
                 AddRangeEntitiesDelete();
                 return await Data.FirstOrDefaultAsync();
@@ -97,13 +97,13 @@ namespace SellPoint.Bussines.Services
         {
             IQueryable<T> Data = null;
             System.Text.RegularExpressions.Regex regex = new(@"^\w+[.]");
-            bool isPredicateAndInclude = predicate != null && properties != null;
+            bool isPredicateAndInclude = predicate != null && properties.Length > 0;
             if (isPredicateAndInclude)
             {
                 AddRangeEntitiesDelete();
                 return Data;
             }
-            if (properties != null)
+            if (properties.Length > 0)
             {
                 AddRangeEntitiesDelete();
                 return Data;
