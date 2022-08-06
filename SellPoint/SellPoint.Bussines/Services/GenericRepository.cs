@@ -112,10 +112,20 @@ namespace SellPoint.Bussines.Services
             {
                 return await DbSet.Where(predicate).ToListAsync();
             }
-            if (include != null)
+
+            return await DbSet.ToListAsync();
+
+            void AddRageEntities()
             {
-                return await DbSet.Include(include).ToListAsync();
+                foreach (var property in properties)
+                {
+                    if (isPredicateAndInclude)
+                        Data = DbSet.Where(predicate).Include($"{regex.Replace(property.Body.ToString(), "")}");
+                    else
+                        Data = DbSet.Include($"{regex.Replace(property.Body.ToString(), "")}");
+                }
             }
+
 
         }
 

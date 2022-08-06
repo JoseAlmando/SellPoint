@@ -56,13 +56,6 @@ namespace SellPoint.Data.Models
         public bool NoEliminable { get; set; }
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        [ForeignKey("IdGrupoEntidad")]
-        [Required]
-        public GrupoEntidad GrupoEntidad { get; set; }
-        [Required]
-        [ForeignKey("IdTipoEntidad")]
-        public TipoEntidad TipoEntidadModel { get; set; }
-
         [Required]
         [ForeignKey("IdUser")]
         public User User { get; set; }

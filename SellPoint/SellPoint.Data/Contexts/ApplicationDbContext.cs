@@ -11,8 +11,6 @@ namespace SellPoint.Data.Contexts
     public class ApplicationDbContext : DbContext
     {
         public virtual DbSet<Entidades> Entidades { get; set; }
-        public virtual DbSet<GrupoEntidad> GrupoEntidad { get; set; }
-        public virtual DbSet<TipoEntidad> TipoEntidad { get; set; }
         public virtual DbSet<User> User { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
