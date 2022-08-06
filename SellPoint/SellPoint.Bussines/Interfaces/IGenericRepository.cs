@@ -13,7 +13,7 @@ namespace SellPoint.Bussines.Interfaces
         Task<T> FindWhere(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] properties);
         Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] properties);
         Task<bool> Add(T entity);
-        Task<bool> Delete<V>(V Id) where V : struct;
+        Task<bool> Delete(T entity);
         Task<bool> Update(T entity);
         Task<bool> Exists(Expression<Func<T, bool>> predicate);
         Task<bool> CommitChanges();
