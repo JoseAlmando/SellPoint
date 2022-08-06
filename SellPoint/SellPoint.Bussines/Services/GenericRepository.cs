@@ -59,47 +59,74 @@ namespace SellPoint.Bussines.Services
             return await CommitChanges();
         }
 
-        public async Task<T> FindWhere(Expression<Func<T, bool>> predicate = null, Expression<Func<T, dynamic>> include = null)
+        public async Task<T> FindWhere(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] properties)
         {
-            if (predicate != null && include != null)
+            IQueryable<T> Data = null;
+            System.Text.RegularExpressions.Regex regex = new(@"^\w+[.]");
+            bool isPredicateAndInclude = predicate != null && properties != null;
+
+            if (predicate != null && properties != null)
             {
-                return await DbSet.Include(include).Where(predicate).FirstOrDefaultAsync();
+                AddRageEntities();
+                return await Data.FirstOrDefaultAsync();
+            }
+            if (properties != null)
+            {
+                AddRageEntities();
+                return await Data.FirstOrDefaultAsync();
             }
             if (predicate != null)
             {
-                return await DbSet.Where(predicate).FirstOrDefaultAsync();
+                return await DbSet.FirstOrDefaultAsync(predicate);
             }
-            if (include != null)
-            {
-                return await DbSet.Include(include).FirstOrDefaultAsync();
-            }
-
+  
             return await DbSet.FirstOrDefaultAsync();
 
+            void AddRageEntities()
+            {
+                foreach (var property in properties)
+                {
+                    if (isPredicateAndInclude)
+                        Data = DbSet.Where(predicate).Include($"{regex.Replace(property.Body.ToString(), "")}");
+                    else
+                        Data = DbSet.Include($"{regex.Replace(property.Body.ToString(), "")}");
+                }
+            }
         }
 
-        public async Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate = null, List<string> Entities = null)
+        public async Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] properties)
         {
-            List<T> data = new();
-            if (predicate != null && Entities != null)
+            IQueryable<T> Data = null;
+            System.Text.RegularExpressions.Regex regex = new(@"^\w+[.]");
+            bool isPredicateAndInclude = predicate != null && properties != null;
+            if (isPredicateAndInclude)
             {
-                foreach (var entity in Entities)
-                    data = await DbSet.Include(entity).Where(predicate).ToListAsync();
-                return data;
+                AddRageEntities();
+                return Data;
+            }
+            if (properties != null)
+            {
+                AddRageEntities();
+                return Data;
             }
             if (predicate != null)
             {
-                data = null;
                 return await DbSet.Where(predicate).ToListAsync();
             }
-            if (Entities != null)
+            
+            return await DbSet.ToListAsync();
+
+            void AddRageEntities()
             {
-                foreach (var entity in Entities)
-                    data = await DbSet.Include(entity).ToListAsync();
-                return data;
+                foreach (var property in properties)
+                {
+                    if (isPredicateAndInclude)
+                        Data = DbSet.Where(predicate).Include($"{regex.Replace(property.Body.ToString(), "")}");
+                    else
+                        Data = DbSet.Include($"{regex.Replace(property.Body.ToString(), "")}");
+                }
             }
 
-            return await DbSet.ToListAsync();
         }
 
         public async Task<bool> Exists(Expression<Func<T, bool>> predicate)

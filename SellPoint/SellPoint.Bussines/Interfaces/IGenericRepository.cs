@@ -10,8 +10,8 @@ namespace SellPoint.Bussines.Interfaces
     {
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(Guid Id);
-        Task<T> FindWhere(Expression<Func<T, bool>> predicate, Expression<Func<T, dynamic>> selector);
-        Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate, Expression<Func<T, dynamic>> include);
+        Task<T> FindWhere(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] properties);
+        Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] properties);
         Task<bool> Add(T entity);
         Task<bool> Delete(Guid Id);
         Task<bool> Update(T entity);

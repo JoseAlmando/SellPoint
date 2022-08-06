@@ -21,15 +21,14 @@ namespace SellPoint.Presentation.API.Controllers
         }
 
         [HttpGet("All")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string SearchTermn)
         {
             try
             {
                 var entities = new List<string>{ "GrupoEntidad", "User", "TipoEntidad" };
                 var result = await _repoEntidades.GetList(
-                    include: x => x.TipoEntidadModel
-
-                );
+                    v => v.Descripcion.Contains(SearchTermn) || v.User.UserNameEntidad.Contains(SearchTermn), 
+                    x => x.TipoEntidadModel, x => x.User, x => x.GrupoEntidad);
                 return Ok(result);
             }
             catch (Exception e)
