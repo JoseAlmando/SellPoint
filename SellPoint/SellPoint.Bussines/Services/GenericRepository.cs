@@ -31,7 +31,7 @@ namespace SellPoint.Bussines.Services
             return await DbSet.ToListAsync();
         }
 
-        public async Task<T> GetById(Guid Id)
+        public async Task<T> GetById<V>(V Id) where V : struct
         {
             return await DbSet.FindAsync(Id);
         }
@@ -42,7 +42,7 @@ namespace SellPoint.Bussines.Services
             return await CommitChanges();
         }
 
-        public async Task<bool> Delete(Guid Id)
+        public async Task<bool> Delete<V>(V Id) where V : struct
         {
             var objectToDelete = await DbSet.FindAsync(Id);
             DbSet.Remove(objectToDelete);
@@ -88,7 +88,14 @@ namespace SellPoint.Bussines.Services
             {
                 return await DbSet.Where(predicate).ToListAsync();
             }
+<<<<<<< Updated upstream
             if (include != null)
+=======
+
+            return await DbSet.ToListAsync();
+
+            void AddRageEntities()
+>>>>>>> Stashed changes
             {
                 return await DbSet.Include(include).ToListAsync();
             }
