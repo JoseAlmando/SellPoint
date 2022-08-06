@@ -10,23 +10,6 @@ namespace SellPoint.Presentation.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "GrupoEntidad",
-                columns: table => new
-                {
-                    IdGruposEntidad = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NoEliminable = table.Column<bool>(type: "bit", nullable: false),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GrupoEntidad", x => x.IdGruposEntidad);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -38,30 +21,6 @@ namespace SellPoint.Presentation.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TipoEntidad",
-                columns: table => new
-                {
-                    IdTipoEntidad = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NoEliminable = table.Column<bool>(type: "bit", nullable: false),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdGrupoEntidad = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoEntidad", x => x.IdTipoEntidad);
-                    table.ForeignKey(
-                        name: "FK_TipoEntidad_GrupoEntidad_IdGrupoEntidad",
-                        column: x => x.IdGrupoEntidad,
-                        principalTable: "GrupoEntidad",
-                        principalColumn: "IdGruposEntidad",
-                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,25 +49,11 @@ namespace SellPoint.Presentation.API.Migrations
                     Status = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     NoEliminable = table.Column<bool>(type: "bit", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdGrupoEntidad = table.Column<int>(type: "int", nullable: false),
-                    IdTipoEntidad = table.Column<int>(type: "int", nullable: false),
                     IdUser = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Entidades", x => x.IdEntidad);
-                    table.ForeignKey(
-                        name: "FK_Entidades_GrupoEntidad_IdGrupoEntidad",
-                        column: x => x.IdGrupoEntidad,
-                        principalTable: "GrupoEntidad",
-                        principalColumn: "IdGruposEntidad",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_Entidades_TipoEntidad_IdTipoEntidad",
-                        column: x => x.IdTipoEntidad,
-                        principalTable: "TipoEntidad",
-                        principalColumn: "IdTipoEntidad",
-                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Entidades_User_IdUser",
                         column: x => x.IdUser,
@@ -123,24 +68,9 @@ namespace SellPoint.Presentation.API.Migrations
                 column: "Descripcion");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Entidades_IdGrupoEntidad",
-                table: "Entidades",
-                column: "IdGrupoEntidad");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Entidades_IdTipoEntidad",
-                table: "Entidades",
-                column: "IdTipoEntidad");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Entidades_IdUser",
                 table: "Entidades",
                 column: "IdUser");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TipoEntidad_IdGrupoEntidad",
-                table: "TipoEntidad",
-                column: "IdGrupoEntidad");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -149,13 +79,7 @@ namespace SellPoint.Presentation.API.Migrations
                 name: "Entidades");
 
             migrationBuilder.DropTable(
-                name: "TipoEntidad");
-
-            migrationBuilder.DropTable(
                 name: "User");
-
-            migrationBuilder.DropTable(
-                name: "GrupoEntidad");
         }
     }
 }

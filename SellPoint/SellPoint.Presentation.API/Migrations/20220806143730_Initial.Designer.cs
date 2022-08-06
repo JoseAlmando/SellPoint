@@ -12,7 +12,7 @@ using SellPoint.Data.Contexts;
 namespace SellPoint.Presentation.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220805030711_Initial")]
+    [Migration("20220806143730_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,12 +57,6 @@ namespace SellPoint.Presentation.API.Migrations
 
                     b.Property<DateTime>("FechaRegistro")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("IdGrupoEntidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdTipoEntidad")
-                        .HasColumnType("int");
 
                     b.Property<int>("IdUser")
                         .HasColumnType("int");
@@ -137,80 +131,9 @@ namespace SellPoint.Presentation.API.Migrations
 
                     b.HasIndex("Descripcion");
 
-                    b.HasIndex("IdGrupoEntidad");
-
-                    b.HasIndex("IdTipoEntidad");
-
                     b.HasIndex("IdUser");
 
                     b.ToTable("Entidades");
-                });
-
-            modelBuilder.Entity("SellPoint.Data.Models.GrupoEntidad", b =>
-                {
-                    b.Property<int>("IdGruposEntidad")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdGruposEntidad"), 1L, 1);
-
-                    b.Property<string>("Comentario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("NoEliminable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdGruposEntidad");
-
-                    b.ToTable("GrupoEntidad");
-                });
-
-            modelBuilder.Entity("SellPoint.Data.Models.TipoEntidad", b =>
-                {
-                    b.Property<int>("IdTipoEntidad")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTipoEntidad"), 1L, 1);
-
-                    b.Property<string>("Comentario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FechaRegistro")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdGrupoEntidad")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("NoEliminable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IdTipoEntidad");
-
-                    b.HasIndex("IdGrupoEntidad");
-
-                    b.ToTable("TipoEntidad");
                 });
 
             modelBuilder.Entity("SellPoint.Data.Models.User", b =>
@@ -238,40 +161,13 @@ namespace SellPoint.Presentation.API.Migrations
 
             modelBuilder.Entity("SellPoint.Data.Models.Entidades", b =>
                 {
-                    b.HasOne("SellPoint.Data.Models.GrupoEntidad", "GrupoEntidad")
-                        .WithMany()
-                        .HasForeignKey("IdGrupoEntidad")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SellPoint.Data.Models.TipoEntidad", "TipoEntidadModel")
-                        .WithMany()
-                        .HasForeignKey("IdTipoEntidad")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SellPoint.Data.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GrupoEntidad");
-
-                    b.Navigation("TipoEntidadModel");
-
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SellPoint.Data.Models.TipoEntidad", b =>
-                {
-                    b.HasOne("SellPoint.Data.Models.GrupoEntidad", "GrupoEntidad")
-                        .WithMany()
-                        .HasForeignKey("IdGrupoEntidad")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GrupoEntidad");
                 });
 #pragma warning restore 612, 618
         }
