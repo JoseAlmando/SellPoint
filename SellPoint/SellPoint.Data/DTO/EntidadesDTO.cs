@@ -29,8 +29,6 @@ namespace SellPoint.Data.DTO
         public string Status { get; set; }
         public bool NoEliminable { get; set; }
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
-        public int IdGrupoEntidad { get; set; }
-        public int IdTipoEntidad { get; set; }
         public int IdUser { get; set; }
     }
 }
