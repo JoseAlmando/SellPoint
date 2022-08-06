@@ -42,10 +42,9 @@ namespace SellPoint.Bussines.Services
             return await CommitChanges();
         }
 
-        public async Task<bool> Delete(Guid Id)
+        public async Task<bool> Delete(T entity)
         {
-            var objectToDelete = await DbSet.FindAsync(Id);
-            DbSet.Remove(objectToDelete);
+            DbSet.Remove(entity);
             return await CommitChanges();
         }
 

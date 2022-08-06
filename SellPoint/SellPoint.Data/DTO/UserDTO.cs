@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SellPoint.Data.DTO
 {
-    public class User
+    public class UserDTO
     {
 
     }
