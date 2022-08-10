@@ -1,0 +1,49 @@
+﻿@inject NavigationManager NavManager
+<style>
+    #splash {
+        width: 200px;
+        height: 200px;
+        background: url("../SEll.png");
+    }
+</style>
+@if(!isLoaded)
+{
+    <div id="splash">
+        Cargando...
+    </div>
+}
+else
+{
+    <form class="w-75">
+        <h3 class="text-center">Login</h3>
+         <div class="form-group">
+        <div class="d-flex flex-column justify-content-center">
+            <input type="text" class="form-control p-2 w-25 mb-2"
+               id="exampleFormControlInput1"
+               placeholder="Usuario"
+               @bind="@user.Username"/>
+            <input type="password" class="form-control p-2 w-25 mb-2"
+                   id="exampleFormControlInput1"
+                   placeholder="Contraseña"
+                   @bind="@user.PassWord"/>
+            <button class="btn btn-success w-25">Iniciar Sesion</button>
+        </div>
+        </div>
+    </form>
+}
+
+@code {
+    private bool isLoaded = false;
+    private UserDTO user = new UserDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(Load);
+    }
+
+    private void Load()
+    {
+        //Thread.Sleep(3000);
+        isLoaded = true;
+    }
+}

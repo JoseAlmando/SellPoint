@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellPoint.Presentation.WebClient", "SellPoint.Presentation.WebClient\SellPoint.Presentation.WebClient.csproj", "{64BDF391-96CA-49B2-9EA3-4760BA593FD0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellPoint.Presentation.API", "SellPoint.Presentation.API\SellPoint.Presentation.API.csproj", "{56EDAE9E-BAA3-4942-AEEB-C02ACD9D0316}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellPoint.Bussines", "SellPoint.Bussines\SellPoint.Bussines.csproj", "{19399F70-9FA4-4DB9-A63C-3F51F8ABD471}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellPoint.Data", "SellPoint.Data\SellPoint.Data.csproj", "{14DB6D30-1BD1-4037-AB09-A9F7571F9FC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellPoint.Utils", "SellPoint.Utils\SellPoint.Utils.csproj", "{D73F5C51-1E7B-42E0-A4EF-E1A779FE9509}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellPoint.Utils", "SellPoint.Utils\SellPoint.Utils.csproj", "{D73F5C51-1E7B-42E0-A4EF-E1A779FE9509}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellPoint.Presentation.WebClient", "SellPoint.Presentation.WebClient\SellPoint.Presentation.WebClient.csproj", "{98E72196-FE9A-47BE-94F2-0666BEEC1351}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{64BDF391-96CA-49B2-9EA3-4760BA593FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64BDF391-96CA-49B2-9EA3-4760BA593FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64BDF391-96CA-49B2-9EA3-4760BA593FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64BDF391-96CA-49B2-9EA3-4760BA593FD0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56EDAE9E-BAA3-4942-AEEB-C02ACD9D0316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56EDAE9E-BAA3-4942-AEEB-C02ACD9D0316}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56EDAE9E-BAA3-4942-AEEB-C02ACD9D0316}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{D73F5C51-1E7B-42E0-A4EF-E1A779FE9509}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D73F5C51-1E7B-42E0-A4EF-E1A779FE9509}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D73F5C51-1E7B-42E0-A4EF-E1A779FE9509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98E72196-FE9A-47BE-94F2-0666BEEC1351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98E72196-FE9A-47BE-94F2-0666BEEC1351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98E72196-FE9A-47BE-94F2-0666BEEC1351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98E72196-FE9A-47BE-94F2-0666BEEC1351}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
