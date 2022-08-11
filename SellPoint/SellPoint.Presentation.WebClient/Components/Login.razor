@@ -3,6 +3,7 @@
 @inject NavigationManager NavManager
 @inject HttpClient _http
 @inject IJSRuntime _js
+@inject StateContainer localStorage
 @using Microsoft.AspNetCore.Components.WebAssembly
 <style>
     #splash {
@@ -63,9 +64,8 @@ else
             }
             else
             {
-                StateContainer localStorage = new();
                 localStorage.user = response;
-                NavManager.NavigateTo("/home");
+                NavManager.NavigateTo("/login");
             }
         }
     }
