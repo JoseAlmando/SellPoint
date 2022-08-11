@@ -1,4 +1,9 @@
-﻿@inject NavigationManager NavManager
+﻿@using Newtonsoft.Json
+@using System.Text
+@inject NavigationManager NavManager
+@inject HttpClient _http
+@inject IJSRuntime _js
+@using Microsoft.AspNetCore.Components.WebAssembly
 <style>
     #splash {
         width: 200px;
@@ -13,21 +18,19 @@
     </div>
 }
 else
-{
-    <form class="w-75">
-        <h3 class="text-center">Login</h3>
-         <div class="form-group">
-        <div class="d-flex flex-column justify-content-center">
-            <input type="text" class="form-control p-2 w-25 mb-2"
+{   
+    <form class="w-75 h-100 d-flex justify-content-center pb-5" style="margin: 0 auto;">
+        <div class="d-flex flex-column w-25 mt-5">
+            <h3 class="text-center mb-3">Login</h3>
+            <input type="text" class="form-control p-2 w-100 mb-2"
                id="exampleFormControlInput1"
                placeholder="Usuario"
                @bind="@user.Username"/>
-            <input type="password" class="form-control p-2 w-25 mb-2"
-                   id="exampleFormControlInput1"
-                   placeholder="Contraseña"
-                   @bind="@user.PassWord"/>
-            <button class="btn btn-success w-25">Iniciar Sesion</button>
-        </div>
+             <input type="password" class="form-control p-2 w-100 mb-3"
+               id="exampleFormControlInput1"
+               placeholder="Contraseña"
+               @bind="@user.PassWord"/>
+         <button type="button" @onclick="LogIn" class="btn btn-success w-100">Iniciar Sesion</button>
         </div>
     </form>
 }
@@ -39,6 +42,32 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Run(Load);
+    }
+
+    private async void LogIn()
+    {
+        if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.PassWord))
+        {
+            await _js.InvokeVoidAsync("alert", "El usuario y contraseña son necesarios...");
+        }
+        else
+        {
+            var data = JsonConvert.SerializeObject(user);
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+            var result = await _http.PostAsync("/api/User/SignIn", content);
+
+            var response = JsonConvert.DeserializeObject<User>(await result.Content.ReadAsStringAsync());
+            if (response is null)
+            {
+                await _js.InvokeVoidAsync("alert", "El usuario y/o contraseña son incorrectos...");
+            }
+            else
+            {
+                StateContainer localStorage = new();
+                localStorage.user = response;
+                NavManager.NavigateTo("/");
+            }
+        }
     }
 
     private void Load()

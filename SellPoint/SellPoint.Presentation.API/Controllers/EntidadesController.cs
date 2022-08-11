@@ -11,7 +11,9 @@ using SellPoint.Data.DTO;
 
 namespace SellPoint.Presentation.API.Controllers
 {
-    public class EntidadesController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EntidadesController : ControllerBase
     {
         private UnitOfWork _unitOfWork;
         private GenericRepository<Entidades> _repoEntidades;
