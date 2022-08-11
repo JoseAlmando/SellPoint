@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellPoint.Data", "SellPoint
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellPoint.Utils", "SellPoint.Utils\SellPoint.Utils.csproj", "{D73F5C51-1E7B-42E0-A4EF-E1A779FE9509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellPoint.Presentation.WebClient", "SellPoint.Presentation.WebClient\SellPoint.Presentation.WebClient.csproj", "{98E72196-FE9A-47BE-94F2-0666BEEC1351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellPoint.Presentation.WebClient", "SellPoint.Presentation.WebClient\SellPoint.Presentation.WebClient.csproj", "{98E72196-FE9A-47BE-94F2-0666BEEC1351}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
