@@ -1,0 +1,95 @@
+﻿@using Newtonsoft.Json
+@using System.Text
+@inject NavigationManager NavManager
+@inject HttpClient _http
+@inject IJSRuntime _js
+@inject StateContainer localStorage
+
+<style>
+    #search-container {
+        margin-left: 20px;
+    }
+</style>
+
+<button class="btn btn-danger" @onclick="() => Modal.Open()">
+    Agregar Entidad
+</button>
+<div class="d-flex mt-3 w-100">
+    <div class="col-md-10">
+        <input class="form-control" placeholder="Descripcion o UserName" @bind="@SearchTerm" @oninput="@((e) => { SearchTerm=(string)e.Value;})" />
+    </div>
+    <div id="search-container" class="col-md-2">
+        <button class="btn btn-primary" @onclick="OnInitializedAsync">
+            Buscar
+        </button>
+    </div>
+</div>
+<table class="table mt-4">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">IdEntidad</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">TipoEntidad</th>
+            <th scope="col">TipoDocumento</th>
+            <th scope="col">Documento</th>
+            <th scope="col">Telefonos</th>
+            <th scope="col">CodPostal</th>
+            <th scope="col">Credito</th>
+            <th scope="col">Status</th>
+            <th scope="col">Registro</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entidad in Entidades)
+        {
+            <tr>
+                <th class="vertical-align" scope="row">@entidad.IdEntidad</th>
+                <td class="vertical-align">@entidad.Descripcion</td>
+                <td class="vertical-align">@entidad.Direccion</td>
+                <td class="vertical-align">@entidad.TipoEntidad</td>
+                <td class="vertical-align">@entidad.TipoDocumento</td>
+                <td class="vertical-align">@entidad.NumeroDocumento</td>
+                <td class="vertical-align">@entidad.Telefonos</td>
+                <td class="vertical-align">@entidad.CodPostal</td>
+                <td class="vertical-align">@entidad.LimiteCredito</td>
+                <td class="vertical-align">@entidad.Status</td>
+                <td class="vertical-align">@entidad.FechaRegistro</td>
+                <td class="vertical-align">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-success mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal" @onclick="() => Modal.Open(entidad)">Editar</button>
+                        <button style="margin-left: 10px;" class="btn btn-danger" @onclick="() => DeleteEntidad(entidad)">Borrar</button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<FormEntidad @ref="Modal"></FormEntidad>
+
+@code {
+    private List<Entidades> Entidades = new();
+    private string SearchTerm = "";
+    private FormEntidad Modal { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetEntities();
+    }
+
+    private async Task GetEntities()
+    {
+        var url = SearchTerm != "" ? $"/api/Entidades/All?SearchTermn={SearchTerm}" : "/api/Entidades/All";
+        var response = await _http.GetStringAsync(url);
+        if (!string.IsNullOrEmpty(response))
+            Entidades = JsonConvert.DeserializeObject<List<Entidades>>(response);
+        Console.WriteLine(url);
+    }
+
+    private async Task DeleteEntidad(Entidades entidad)
+    {
+        //NavManager.NavigateTo("/edit/" + book.Id);
+    }
+}

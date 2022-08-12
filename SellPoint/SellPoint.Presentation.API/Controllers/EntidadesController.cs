@@ -24,7 +24,7 @@ namespace SellPoint.Presentation.API.Controllers
         }
 
         [HttpGet("All")]
-        public async Task<IActionResult> GetAll(string SearchTermn)
+        public async Task<IActionResult> GetAll(string? SearchTermn)
         {
             try
             {

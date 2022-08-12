@@ -1,0 +1,222 @@
+﻿@using Newtonsoft.Json
+@using System.Text
+@inject NavigationManager NavManager
+@inject HttpClient _http
+@inject IJSRuntime _js
+@inject StateContainer localStorage
+
+<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button @onclick="() => Close()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Descripcion</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.Descripcion" @oninput="@((e) => { entidad.Descripcion=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Direccion</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.Direccion" @oninput="@((e) => { entidad.Direccion=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Localidad</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.Localidad" @oninput="@((e) => { entidad.Localidad=(string)e.Value;})" />
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Tipo Entidad</label>
+                        <select class="form-select" @onchange="@((e) => { entidad.TipoEntidad=(string)e.Value;})">
+                            <option value="Física" selected>Física</option>
+                            <option value="Jurídica">Jurídica</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Tipo Documento</label>
+                        <select class="form-select" @onchange="@((e) => { entidad.TipoDocumento=(string)e.Value;})">
+                            <option value="RNC" selected>RNC</option>
+                            <option value="Cédula">Cédula</option>
+                            <option value="Pasaporte">Pasaporte</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Documento</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.NumeroDocumento" @oninput="@((e) => { entidad.NumeroDocumento=(long)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Telefonos</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.Telefonos" @oninput="@((e) => { entidad.Telefonos=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">URLPaginaWeb</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.URLPaginaWeb" @oninput="@((e) => { entidad.URLPaginaWeb=(string)e.Value;})" />
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">URLFacebook</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.URLFacebook" @oninput="@((e) => { entidad.URLFacebook=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">URLInstagram</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.URLInstagram" @oninput="@((e) => { entidad.URLInstagram=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">URLTwitter</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.URLTwitter" @oninput="@((e) => { entidad.URLTwitter=(string)e.Value;})" />
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">URLTiktok</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.URLTiktok" @oninput="@((e) => { entidad.URLTiktok=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">CodPostal</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.CodPostal" @oninput="@((e) => { entidad.CodPostal=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">CoordenadasGPS</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.CoordenadasGPS" @oninput="@((e) => { entidad.CoordenadasGPS=(string)e.Value;})" />
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">LimiteCredito</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.LimiteCredito" @oninput="@((e) => { entidad.LimiteCredito=(double)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">RolUserEntidad</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.RolUserEntidad" @oninput="@((e) => { entidad.RolUserEntidad=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">RolUser</label>
+                        <select class="form-select" @onchange="@((e) => { entidad.RolUserEntidad=(string)e.Value;})">
+                            <option value="Admin" selected>Admin</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="User">User</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Comentario</label>
+                        <input type="text" class="form-control"
+                               placeholder="Book 1"
+                               @bind="@entidad.Comentario" @oninput="@((e) => { entidad.Comentario=(string)e.Value;})" />
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Status</label>
+                        <select class="form-select" @onchange="@((e) => { entidad.Status=(string)e.Value;})">
+                            <option class="form-control" value="Activa" selected>Activa</option>
+                            <option class="form-control" value="Inactiva">Inactiva</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="d-flex form-group m-3">
+                        <label style="cursor: pointer;" for="check" class="m-3">¿Es eliminable?</label>
+                        <input id="check"
+                               type="checkbox"
+                               checked = "checked"
+                               class="form-check"
+                               style="width: 20px; cursor: pointer;"
+                               @onchange="@((e) => { entidad.NoEliminable=(bool)e.Value;})"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+
+@code {
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    private Entidades entidad = new();
+
+    public void Open(Entidades _entidad = null)
+    {
+        if (_entidad is not null)
+            entidad = _entidad;
+
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
+}
