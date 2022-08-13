@@ -4,6 +4,7 @@
 @inject HttpClient _http
 @inject IJSRuntime _js
 @inject StateContainer localStorage
+@using Microsoft.AspNetCore.Components
 
 <style>
     #search-container {
@@ -42,7 +43,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var entidad in Entidades)
+        @foreach (var entidad in localStorage.Entidades)
         {
             <tr>
                 <th class="vertical-align" scope="row">@entidad.IdEntidad</th>
@@ -70,26 +71,44 @@
 <FormEntidad @ref="Modal"></FormEntidad>
 
 @code {
-    private List<Entidades> Entidades = new();
     private string SearchTerm = "";
     private FormEntidad Modal { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         await GetEntities();
+        StateHasChanged();
     }
 
-    private async Task GetEntities()
+    public async Task GetEntities()
     {
-        var url = SearchTerm != "" ? $"/api/Entidades/All?SearchTermn={SearchTerm}" : "/api/Entidades/All";
-        var response = await _http.GetStringAsync(url);
-        if (!string.IsNullOrEmpty(response))
-            Entidades = JsonConvert.DeserializeObject<List<Entidades>>(response);
-        Console.WriteLine(url);
+        try
+        {
+            var url = !string.IsNullOrEmpty(SearchTerm) ? $"/api/Entidades/All?SearchTermn={SearchTerm}" : "/api/Entidades/All";
+            var response = await _http.GetStringAsync(url);
+            if (!string.IsNullOrEmpty(response))
+                localStorage.Entidades = JsonConvert.DeserializeObject<List<Entidades>>(response);
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+        
+        
     }
 
     private async Task DeleteEntidad(Entidades entidad)
     {
-        //NavManager.NavigateTo("/edit/" + book.Id);
+        var confirm = await _js.InvokeAsync<bool>("confirm", $"¿Desea eliminar la entidad {entidad.Descripcion}?");
+        if (confirm)
+        {
+            string url = $"/api/Entidades/Delete/{entidad.IdEntidad}";
+            var response = await _http.DeleteAsync(url);
+            var catchResult = await response.Content.ReadAsStringAsync();
+            if (JsonConvert.DeserializeObject<bool>(catchResult))
+                await _js.InvokeVoidAsync("alert", "Se ha Borrado la entidad con exito.");
+                await OnInitializedAsync();
+        }
+        
     }
 }

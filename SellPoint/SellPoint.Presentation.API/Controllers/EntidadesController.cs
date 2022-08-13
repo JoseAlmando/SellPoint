@@ -30,7 +30,7 @@ namespace SellPoint.Presentation.API.Controllers
             {
                 SearchTermn = SearchTermn == null ? string.Empty : SearchTermn.Trim();
                 var result = await _repoEntidades.GetList(
-                    v => v.Descripcion.Contains(SearchTermn) || v.User.UserNameEntidad.Contains(SearchTermn), 
+                    v => v.Descripcion.Contains(SearchTermn) || v.User.UserNameEntidad.Contains(SearchTermn),
                     x => x.User);
                 return Ok(result);
             }
@@ -121,7 +121,11 @@ namespace SellPoint.Presentation.API.Controllers
                         User = user
                     };
                     var UpdatedRow = await _repoEntidades.Update(UpdateEntidad);
-                    return Ok(UpdatedRow);
+                    if (UpdatedRow)
+                        return Ok(UpdateEntidad);
+                    else
+                        return BadRequest("Error updating...");
+
                 }
             }
             catch (Exception ex)
@@ -130,7 +134,7 @@ namespace SellPoint.Presentation.API.Controllers
             }
         }
 
-        [HttpDelete("Delete")]
+        [HttpDelete("Delete/{Id:int}")]
         public async Task<IActionResult> Delete(int Id)
         {
             try

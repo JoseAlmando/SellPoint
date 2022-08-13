@@ -19,21 +19,21 @@
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Descripcion</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="Persona"
                                @bind="@entidad.Descripcion" @oninput="@((e) => { entidad.Descripcion=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Direccion</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="street #11"
                                @bind="@entidad.Direccion" @oninput="@((e) => { entidad.Direccion=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Localidad</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="SD"
                                @bind="@entidad.Localidad" @oninput="@((e) => { entidad.Localidad=(string)e.Value;})" />
                     </div>
                 </div>
@@ -41,15 +41,15 @@
                 <div class="d-flex flex-row justify-content-center">
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Tipo Entidad</label>
-                        <select class="form-select" @onchange="@((e) => { entidad.TipoEntidad=(string)e.Value;})">
-                            <option value="Física" selected>Física</option>
+                        <select class="form-select" @bind="@entidad.TipoEntidad">
+                            <option value="Física">Física</option>
                             <option value="Jurídica">Jurídica</option>
                         </select>
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Tipo Documento</label>
-                        <select class="form-select" @onchange="@((e) => { entidad.TipoDocumento=(string)e.Value;})">
+                        <select class="form-select" @bind="@entidad.TipoDocumento">
                             <option value="RNC" selected>RNC</option>
                             <option value="Cédula">Cédula</option>
                             <option value="Pasaporte">Pasaporte</option>
@@ -60,22 +60,22 @@
                 <div class="d-flex flex-row justify-content-center">
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Documento</label>
-                        <input type="text" class="form-control"
-                               placeholder="Book 1"
-                               @bind="@entidad.NumeroDocumento" @oninput="@((e) => { entidad.NumeroDocumento=(long)e.Value;})" />
+                        <input type="number" class="form-control"
+                               placeholder="4023485673"
+                               @bind="@NumeroDocumento" @oninput="@((e) => { NumeroDocumento=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Telefonos</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="8092587654"
                                @bind="@entidad.Telefonos" @oninput="@((e) => { entidad.Telefonos=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">URLPaginaWeb</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="https://me.com"
                                @bind="@entidad.URLPaginaWeb" @oninput="@((e) => { entidad.URLPaginaWeb=(string)e.Value;})" />
                     </div>
                 </div>
@@ -84,21 +84,21 @@
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">URLFacebook</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="https://facebook.com"
                                @bind="@entidad.URLFacebook" @oninput="@((e) => { entidad.URLFacebook=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">URLInstagram</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="https://instagram.com"
                                @bind="@entidad.URLInstagram" @oninput="@((e) => { entidad.URLInstagram=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">URLTwitter</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="https://twitter.com"
                                @bind="@entidad.URLTwitter" @oninput="@((e) => { entidad.URLTwitter=(string)e.Value;})" />
                     </div>
                 </div>
@@ -107,21 +107,21 @@
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">URLTiktok</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="https://tiktok.com"
                                @bind="@entidad.URLTiktok" @oninput="@((e) => { entidad.URLTiktok=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">CodPostal</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="93000"
                                @bind="@entidad.CodPostal" @oninput="@((e) => { entidad.CodPostal=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">CoordenadasGPS</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="45.90.65.34"
                                @bind="@entidad.CoordenadasGPS" @oninput="@((e) => { entidad.CoordenadasGPS=(string)e.Value;})" />
                     </div>
                 </div>
@@ -129,21 +129,14 @@
                 <div class="d-flex flex-row justify-content-center">
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">LimiteCredito</label>
-                        <input type="text" class="form-control"
-                               placeholder="Book 1"
-                               @bind="@entidad.LimiteCredito" @oninput="@((e) => { entidad.LimiteCredito=(double)e.Value;})" />
-                    </div>
-
-                    <div class="form-group m-3">
-                        <label for="exampleFormControlInput1">RolUserEntidad</label>
-                        <input type="text" class="form-control"
-                               placeholder="Book 1"
-                               @bind="@entidad.RolUserEntidad" @oninput="@((e) => { entidad.RolUserEntidad=(string)e.Value;})" />
+                        <input type="number" class="form-control"
+                               placeholder="10"
+                               @bind="@LimiteCredito" @oninput="@((e) => { LimiteCredito=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">RolUser</label>
-                        <select class="form-select" @onchange="@((e) => { entidad.RolUserEntidad=(string)e.Value;})">
+                        <select class="form-select" @bind="@entidad.RolUserEntidad">
                             <option value="Admin" selected>Admin</option>
                             <option value="Supervisor">Supervisor</option>
                             <option value="User">User</option>
@@ -155,33 +148,50 @@
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Comentario</label>
                         <input type="text" class="form-control"
-                               placeholder="Book 1"
+                               placeholder="example 1"
                                @bind="@entidad.Comentario" @oninput="@((e) => { entidad.Comentario=(string)e.Value;})" />
                     </div>
 
                     <div class="form-group m-3">
                         <label for="exampleFormControlInput1">Status</label>
-                        <select class="form-select" @onchange="@((e) => { entidad.Status=(string)e.Value;})">
+                        <select class="form-select" @bind="entidad.Status">
                             <option class="form-control" value="Activa" selected>Activa</option>
                             <option class="form-control" value="Inactiva">Inactiva</option>
                         </select>
                     </div>
                 </div>
-                <div class="d-flex flex-row justify-content-center">
-                    <div class="d-flex form-group m-3">
-                        <label style="cursor: pointer;" for="check" class="m-3">¿Es eliminable?</label>
-                        <input id="check"
-                               type="checkbox"
-                               checked = "checked"
-                               class="form-check"
-                               style="width: 20px; cursor: pointer;"
-                               @onchange="@((e) => { entidad.NoEliminable=(bool)e.Value;})"/>
+                @if (@isUpdate)
+                {
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="d-flex form-group m-3">
+                            <label style="cursor: pointer;" for="check" class="m-3">¿Es eliminable?</label>
+                            <input id="check"
+                                   type="checkbox"
+                                   class="form-check"
+                                   style="width: 20px; cursor: pointer;"
+                                   @bind="@entidad.NoEliminable"/>
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="d-flex form-group m-3">
+                            <label style="cursor: pointer;" for="check" class="m-3">¿Es eliminable?</label>
+                            <input id="check"
+                                   type="checkbox"
+                                   checked = "checked"
+                                   class="form-check"
+                                   style="width: 20px; cursor: pointer;"
+                                   @onchange="@((e) => { entidad.NoEliminable=(bool)e.Value;})"/>
+                        </div>
+                    </div>
+                }
+                
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+                <button type="button" class="btn btn-primary" @onclick="Save">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Cancelar</button>
             </div>
         </div>
     </div>
@@ -198,13 +208,33 @@
     public string ModalDisplay = "none;";
     public string ModalClass = "";
     public bool ShowBackdrop = false;
+    private bool isUpdate = false;
+    public event Action? OnChange;
 
-    private Entidades entidad = new();
+    private string LimiteCredito { get; set; } = "";
+    private string NumeroDocumento { get; set; } = "";
+
+    private EntidadesDTO? entidad = new();
+
 
     public void Open(Entidades _entidad = null)
     {
         if (_entidad is not null)
-            entidad = _entidad;
+        {
+            isUpdate = true;
+            entidad = ExtensionsMethods.Map<Entidades, EntidadesDTO>(_entidad);
+            LimiteCredito = entidad.LimiteCredito.ToString();
+            NumeroDocumento = entidad.NumeroDocumento.ToString();
+        }
+        else
+        {
+            isUpdate = false;
+        }
+        entidad.TipoEntidad = entidad.TipoEntidad ?? "Física";
+        entidad.TipoDocumento = entidad.TipoDocumento ?? "RNC";
+        entidad.RolUserEntidad = entidad.RolUserEntidad ?? "Admin";
+        entidad.Status = entidad.Status ??"Activa";
+
 
         ModalDisplay = "block;";
         ModalClass = "Show";
@@ -214,9 +244,60 @@
 
     public void Close()
     {
+        if (entidad.NumeroDocumento != 0 || !string.IsNullOrEmpty(entidad.Descripcion) || !string.IsNullOrEmpty(entidad.Direccion)
+                                || !string.IsNullOrEmpty(entidad.Localidad) || !string.IsNullOrEmpty(entidad.Telefonos))
+        {
+            entidad = new EntidadesDTO();
+            LimiteCredito = string.Empty;
+            NumeroDocumento = string.Empty;
+        }
         ModalDisplay = "none";
         ModalClass = "";
         ShowBackdrop = false;
         StateHasChanged();
+    }
+
+    //Save or edit entity 
+    private async Task Save()
+    {
+        entidad.LimiteCredito = !string.IsNullOrEmpty(LimiteCredito) ? int.Parse(LimiteCredito) : 0;
+        entidad.NumeroDocumento = !string.IsNullOrEmpty(NumeroDocumento) ? long.Parse(NumeroDocumento) : 0;
+
+        bool validationForm = entidad.NumeroDocumento == 0 || string.IsNullOrEmpty(entidad.Descripcion) || string.IsNullOrEmpty(entidad.Direccion)
+                                || string.IsNullOrEmpty(entidad.Localidad) || string.IsNullOrEmpty(entidad.Telefonos);
+        if (validationForm)
+        {
+            await _js.InvokeVoidAsync("alert", "Hay campos requeridos.");
+        }
+        else
+        {
+            entidad.IdUser = localStorage.user.Id;
+            var data = JsonConvert.SerializeObject(entidad);
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+            HttpResponseMessage result = null;
+            if (!isUpdate)
+                result = await _http.PostAsync("/api/Entidades/Create", content);
+            else 
+                result = await _http.PutAsync("/api/Entidades/Update", content);
+
+            var catchResult = await result.Content.ReadAsStringAsync();
+            var response = JsonConvert.DeserializeObject<Entidades>(catchResult);
+
+            if (response is null)
+            {
+                await _js.InvokeVoidAsync("alert", "Sucedio un error al guardar la entidad");
+            }
+            else
+            {
+                Close();
+                await _js.InvokeVoidAsync("alert", "Se ha guardado la entidad con exito.");
+                var result2 = await _http.GetStringAsync("/api/Entidades/All");
+                if (!string.IsNullOrEmpty(result2))
+                {
+                    localStorage.Entidades = JsonConvert.DeserializeObject<List<Entidades>>(result2);
+                }
+            }
+        }
+
     }
 }
