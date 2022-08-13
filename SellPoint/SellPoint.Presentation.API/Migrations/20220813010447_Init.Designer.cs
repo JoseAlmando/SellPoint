@@ -12,8 +12,8 @@ using SellPoint.Data.Contexts;
 namespace SellPoint.Presentation.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220806143730_Initial")]
-    partial class Initial
+    [Migration("20220813010447_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -146,8 +146,8 @@ namespace SellPoint.Presentation.API.Migrations
 
                     b.Property<string>("PasswordEntidad")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("UserNameEntidad")
                         .IsRequired()
@@ -155,6 +155,9 @@ namespace SellPoint.Presentation.API.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserNameEntidad")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });

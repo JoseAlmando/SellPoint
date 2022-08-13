@@ -152,6 +152,9 @@ namespace SellPoint.Presentation.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserNameEntidad")
+                        .IsUnique();
+
                     b.ToTable("User");
                 });
 

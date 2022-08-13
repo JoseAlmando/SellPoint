@@ -1,0 +1,92 @@
+﻿@using Newtonsoft.Json
+@using System.Text
+@inject NavigationManager NavManager
+@inject HttpClient _http
+@inject IJSRuntime _js
+@inject StateContainer localStorage
+
+
+<h1> Usuarios </h1>
+<form class="w-100 h-100 d-flex justify-content-center my-2" style="margin: 0 auto;">
+    <div class="d-flex flex-column w-50 p-4">
+        <input type="text" class="form-control p-2 w-100 mb-2"
+               id="id"
+               readonly
+               placeholder="Id"
+               @bind="@user.Id" />
+
+        <input type="text" class="form-control p-2 w-100 mb-2"
+               id="user"
+               placeholder="Usuario"
+               @bind="@user.Username" required />
+
+
+        <input type="password" class="form-control p-2 w-100 mb-3"
+               id="password"
+               placeholder="Contraseña"
+               @bind="@user.PassWord" required />
+
+        <input type="password" class="form-control p-2 w-100 mb-3"
+               id="repeatPassWord"
+               placeholder="Repetir Contraseña"
+               @bind="@repeatPassword" required />
+
+        <button type="button" @onclick="Save" class="btn btn-success w-100">Guardar</button>
+    </div>
+</form>
+
+
+@code {
+
+    private UserDTO user = new UserDTO();
+    private bool isUpdate = false;
+    private string actualPassword = String.Empty;
+    private string oldPasswordState = String.Empty;
+    private string repeatPassword = String.Empty;
+
+    protected override void OnInitialized()
+    {
+        user = localStorage.user.MapToUserDTO();
+        user.PassWord = String.Empty;
+
+    }
+
+
+    private async void Save()
+    {
+        if (user.Id != 0)
+        {
+            isUpdate = true;
+        }
+
+        if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.PassWord))
+        {
+            await _js.InvokeVoidAsync("alert", "El usuario y contraseña son necesarios...");
+        }
+      
+        else if (repeatPassword != user.PassWord)
+        {
+            await _js.InvokeVoidAsync("alert", "Las contrase;as no coinciden.");
+        }
+
+        else
+        {
+            var data = JsonConvert.SerializeObject(user);
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+            var result = await _http.PutAsync($"/api/User/{user.Id}", content);
+
+            var response = JsonConvert.DeserializeObject<UserDTO>(await result.Content.ReadAsStringAsync());
+            if (response is null || response.Id == 0)
+            {
+                await _js.InvokeVoidAsync("alert", "No se ha podido actualizar el usuario.");
+            }
+            else
+            {
+                await _js.InvokeVoidAsync("alert", "Usuario actualizado.");
+                NavManager.NavigateTo("/home");
+            }
+        }
+        StateHasChanged();
+    }
+
+}

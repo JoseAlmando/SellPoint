@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SellPoint.Presentation.API.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace SellPoint.Presentation.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserNameEntidad = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    PasswordEntidad = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    PasswordEntidad = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,6 +71,12 @@ namespace SellPoint.Presentation.API.Migrations
                 name: "IX_Entidades_IdUser",
                 table: "Entidades",
                 column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_UserNameEntidad",
+                table: "User",
+                column: "UserNameEntidad",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

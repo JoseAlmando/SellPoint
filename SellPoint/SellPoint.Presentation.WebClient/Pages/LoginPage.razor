@@ -5,7 +5,7 @@
 
 <PageTitle>SellPoint</PageTitle>
 
-@if(localStorage.user is null)
+@if (localStorage.user is null)
 {
     <Login></Login>
 }
@@ -17,19 +17,29 @@ else
         </div>
         <main>
             <div class="top-row px-4">
-           
             </div>
 
             <article class="content px-4">
                 @Body
             </article>
+           
         </main>
+         <footer class="fixed-bottom text-white">
+
+                <p>
+
+                    <span> User: <b>@localStorage.user.UserNameEntidad</b> </span>
+                    |
+                    <span> Date: <b>@DateTime.Now.ToShortDateString() </b> </span> |
+                </p>
+
+            </footer>
     </div>
 }
 
 @code {
     protected override async Task OnInitializedAsync()
     {
-        
+
     }
 }
