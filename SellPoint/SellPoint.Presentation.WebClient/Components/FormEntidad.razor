@@ -188,6 +188,22 @@
                     </div>
                 }
 
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Username</label>
+                        <input type="text" class="form-control"
+                               placeholder="example 1"
+                               @bind="@user.Username"/>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Password</label>
+                        <input type="password" class="form-control"
+                               placeholder="example 1"
+                               @bind="@user.PassWord"/>
+                    </div>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" @onclick="Save">Guardar</button>
@@ -215,6 +231,7 @@
     private string NumeroDocumento { get; set; } = "";
 
     private EntidadesDTO? entidad = new();
+    private UserDTO user = new();
 
 
     public void Open(Entidades _entidad = null)
@@ -271,7 +288,14 @@
         }
         else
         {
-            entidad.IdUser = localStorage.user.Id;
+            //user insert 
+            var dataUser = JsonConvert.SerializeObject(user);
+            var contentUser = new StringContent(dataUser, Encoding.UTF8, "application/json");
+            var resultUser = await _http.PostAsync("/api/User", contentUser);
+            var responseUser = JsonConvert.DeserializeObject<User>(await resultUser.Content.ReadAsStringAsync());
+
+            //entity insert
+            entidad.IdUser = responseUser.Id;
             var data = JsonConvert.SerializeObject(entidad);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
             HttpResponseMessage result = null;
