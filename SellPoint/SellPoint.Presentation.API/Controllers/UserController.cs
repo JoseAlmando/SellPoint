@@ -41,6 +41,24 @@ namespace SellPoint.Presentation.API.Controllers
             }
         }
 
+
+        [HttpGet("TieneUsuarios")]
+        public async Task<ActionResult<bool>> TieneUsuarios()
+        {
+
+            try
+            {
+
+              var usuarios = await _repoUser.GetList();
+
+                return usuarios.Count() > 0;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserDTO user)
         {
