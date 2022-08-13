@@ -121,7 +121,11 @@ namespace SellPoint.Presentation.API.Controllers
                         User = user
                     };
                     var UpdatedRow = await _repoEntidades.Update(UpdateEntidad);
-                    return Ok(UpdatedRow);
+                    if (UpdatedRow)
+                        return Ok(UpdateEntidad);
+                    else
+                        return BadRequest("Error updating...");
+
                 }
             }
             catch (Exception ex)

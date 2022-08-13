@@ -27,7 +27,7 @@ namespace SellPoint.Data.Models
         [StringLength(9)]
         public string TipoDocumento { get; set; }
         [Required]
-        [MaxLength(15)]
+        [Range(0, 15)]
         public long NumeroDocumento { get; set; }
         [Required]
         [StringLength(60)]
@@ -46,7 +46,7 @@ namespace SellPoint.Data.Models
         public string CodPostal { get; set; }
         [StringLength(255)]
         public string CoordenadasGPS { get; set; }
-        [MaxLength(15)]
+        [Range(0, 15)]
         public double LimiteCredito { get; set; }
         [StringLength(10)]
         public string RolUserEntidad { get; set; }

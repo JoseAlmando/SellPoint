@@ -4,6 +4,7 @@
 @inject HttpClient _http
 @inject IJSRuntime _js
 @inject StateContainer localStorage
+@using Microsoft.AspNetCore.Components
 
 <style>
     #search-container {
@@ -77,6 +78,7 @@
     protected override async Task OnInitializedAsync()
     {
         await GetEntities();
+        StateHasChanged();
     }
 
     private async Task GetEntities()
@@ -85,7 +87,7 @@
         var response = await _http.GetStringAsync(url);
         if (!string.IsNullOrEmpty(response))
             Entidades = JsonConvert.DeserializeObject<List<Entidades>>(response);
-        Console.WriteLine(url);
+        Console.WriteLine(Entidades);
     }
 
     private async Task DeleteEntidad(Entidades entidad)
