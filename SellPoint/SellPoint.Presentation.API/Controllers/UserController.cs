@@ -41,6 +41,25 @@ namespace SellPoint.Presentation.API.Controllers
             }
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<User>> GetUserById(int id)
+        {
+            try
+            {
+                
+                var result = await _repoUser.GetById(id);
+                if (result is null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.ToString());
+            }
+        }
 
         [HttpGet("TieneUsuarios")]
         public async Task<ActionResult<bool>> TieneUsuarios()
