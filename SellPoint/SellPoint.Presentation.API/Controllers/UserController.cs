@@ -69,7 +69,9 @@ namespace SellPoint.Presentation.API.Controllers
                 var userMapped = user.MapToUserEntity();
                 await _repoUser.Add(userMapped);
 
-                return NoContent();
+                var userSave  = await _repoUser.FindWhere(u => u.UserNameEntidad == user.Username);
+
+                return Ok(userSave);
             }
             catch (Exception ex)
             {
