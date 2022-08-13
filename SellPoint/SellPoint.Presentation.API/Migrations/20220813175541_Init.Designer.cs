@@ -12,8 +12,8 @@ using SellPoint.Data.Contexts;
 namespace SellPoint.Presentation.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220813053617_MaxLengthChanged")]
-    partial class MaxLengthChanged
+    [Migration("20220813175541_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -153,6 +153,9 @@ namespace SellPoint.Presentation.API.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserNameEntidad")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });

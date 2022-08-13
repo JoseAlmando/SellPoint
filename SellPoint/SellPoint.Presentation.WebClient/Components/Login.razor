@@ -1,5 +1,6 @@
 ﻿@using Newtonsoft.Json
 @using System.Text
+@using System.Net
 @inject NavigationManager NavManager
 @inject HttpClient _http
 @inject IJSRuntime _js
@@ -48,6 +49,7 @@ else
 
 @code {
     private bool isLoaded = false;
+    private bool existUser = true;
     private bool isLoading;
     private UserDTO user = new UserDTO();
 
@@ -67,17 +69,39 @@ else
         {
             var data = JsonConvert.SerializeObject(user);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
-            var result = await _http.PostAsync("/api/User/SignIn", content);
 
-            var response = JsonConvert.DeserializeObject<User>(await result.Content.ReadAsStringAsync());
-            if (response is null || response.Id == 0)
+            if (existUser)
             {
-                await _js.InvokeVoidAsync("alert", "El usuario y/o contraseña son incorrectos...");
+
+                var result = await _http.PostAsync("/api/User/SignIn", content);
+
+                var response = JsonConvert.DeserializeObject<User>(await result.Content.ReadAsStringAsync());
+                if (response is null || response.Id == 0)
+                {
+                    await _js.InvokeVoidAsync("alert", "El usuario y/o contraseña son incorrectos...");
+                }
+                else
+                {
+                    localStorage.user = response;
+                    NavManager.NavigateTo("/home");
+                }
             }
             else
             {
-                localStorage.user = response;
-                NavManager.NavigateTo("/home");
+                var result = await _http.PostAsync("/api/User/", content);
+
+                var response = JsonConvert.DeserializeObject<User>(await result.Content.ReadAsStringAsync());
+                if (result.StatusCode != HttpStatusCode.OK)
+                {
+                    await _js.InvokeVoidAsync("alert", "Error al crear el usuario.");
+                }
+                else
+                {
+                    await _js.InvokeVoidAsync("alert", "Usuario creado con exito");
+
+                    localStorage.user = response;
+                    NavManager.NavigateTo("/home");
+                }
             }
 
         }
@@ -85,9 +109,24 @@ else
         StateHasChanged();
     }
 
-    private void Load()
+
+    private async void Load()
     {
-        //Thread.Sleep(3000);
         isLoaded = true;
+        try
+        {
+
+            var result = await _http.GetAsync("/api/User/TieneUsuarios");
+            existUser = JsonConvert.DeserializeObject<bool>(await result.Content.ReadAsStringAsync());
+            if (!existUser)
+            {
+
+                await _js.InvokeVoidAsync("alert", "No existen usuarios. El usuario que escriba a continuacion sera su usuario principal.");
+            }
+        }
+        catch
+        {
+
+        }
     }
 }

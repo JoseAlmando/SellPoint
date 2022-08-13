@@ -34,7 +34,7 @@ namespace SellPoint.Presentation.API.Migrations
                     Localidad = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     TipoEntidad = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     TipoDocumento = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
-                    NumeroDocumento = table.Column<long>(type: "bigint", maxLength: 15, nullable: false),
+                    NumeroDocumento = table.Column<long>(type: "bigint", nullable: false),
                     Telefonos = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     URLPaginaWeb = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     URLFacebook = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
@@ -43,7 +43,7 @@ namespace SellPoint.Presentation.API.Migrations
                     URLTiktok = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     CodPostal = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     CoordenadasGPS = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    LimiteCredito = table.Column<double>(type: "float", maxLength: 15, nullable: false),
+                    LimiteCredito = table.Column<double>(type: "float", nullable: false),
                     RolUserEntidad = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
@@ -59,7 +59,7 @@ namespace SellPoint.Presentation.API.Migrations
                         column: x => x.IdUser,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
