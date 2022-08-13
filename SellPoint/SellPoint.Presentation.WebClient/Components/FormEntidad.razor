@@ -175,6 +175,20 @@
                 }
                 else
                 {
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Username</label>
+                        <input type="text" class="form-control"
+                               placeholder="example 1"
+                               @bind="@user.Username"/>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label for="exampleFormControlInput1">Password</label>
+                        <input type="password" class="form-control"
+                               placeholder="example 1"
+                               @bind="@user.PassWord"/>
+                    </div>
+
                     <div class="d-flex flex-row justify-content-center">
                         <div class="d-flex form-group m-3">
                             <label style="cursor: pointer;" for="check" class="m-3">¿Es eliminable?</label>
@@ -215,6 +229,7 @@
     private string NumeroDocumento { get; set; } = "";
 
     private EntidadesDTO? entidad = new();
+    private UserDTO user = new();
 
 
     public void Open(Entidades _entidad = null)
@@ -225,6 +240,7 @@
             entidad = ExtensionsMethods.Map<Entidades, EntidadesDTO>(_entidad);
             LimiteCredito = entidad.LimiteCredito.ToString();
             NumeroDocumento = entidad.NumeroDocumento.ToString();
+
         }
         else
         {
@@ -271,7 +287,21 @@
         }
         else
         {
-            entidad.IdUser = localStorage.user.Id;
+            if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.PassWord)) 
+            {
+                entidad.IdUser = localStorage.user.Id;
+            }
+            else
+            {
+                //user insert 
+                var dataUser = JsonConvert.SerializeObject(user);
+                var contentUser = new StringContent(dataUser, Encoding.UTF8, "application/json");
+                var resultUser = await _http.PostAsync("/api/User", contentUser);
+                var responseUser = JsonConvert.DeserializeObject<User>(await resultUser.Content.ReadAsStringAsync());
+
+                entidad.IdUser = responseUser.Id;
+            }
+            //entity insert
             var data = JsonConvert.SerializeObject(entidad);
             var content = new StringContent(data, Encoding.UTF8, "application/json");
             HttpResponseMessage result = null;
@@ -295,6 +325,7 @@
                 if (!string.IsNullOrEmpty(result2))
                 {
                     localStorage.Entidades = JsonConvert.DeserializeObject<List<Entidades>>(result2);
+                    NavManager.NavigateTo("/user/1");
                 }
             }
         }

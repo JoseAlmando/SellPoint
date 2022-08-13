@@ -1,7 +1,20 @@
-﻿
-@page "/user"
+﻿@inject NavigationManager NavManager
+
+@page "/user/{isFromEntity}"
 
 <PageTitle>Usuarios</PageTitle>
 
 
 <UserEntidad></UserEntidad>
+
+@code {
+    [Parameter]
+    public string isFromEntity { get; set; } = "0";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (isFromEntity == "1")
+            NavManager.NavigateTo("/home");
+    }
+
+}
