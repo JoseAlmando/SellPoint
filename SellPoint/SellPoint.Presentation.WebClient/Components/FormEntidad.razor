@@ -209,11 +209,13 @@
     public string ModalClass = "";
     public bool ShowBackdrop = false;
     private bool isUpdate = false;
+    public event Action? OnChange;
 
     private string LimiteCredito { get; set; } = "";
     private string NumeroDocumento { get; set; } = "";
 
     private EntidadesDTO? entidad = new();
+
 
     public void Open(Entidades _entidad = null)
     {
@@ -224,6 +226,14 @@
             LimiteCredito = entidad.LimiteCredito.ToString();
             NumeroDocumento = entidad.NumeroDocumento.ToString();
         }
+        else
+        {
+            isUpdate = false;
+        }
+        entidad.TipoEntidad = entidad.TipoEntidad ?? "Física";
+        entidad.TipoDocumento = entidad.TipoDocumento ?? "RNC";
+        entidad.RolUserEntidad = entidad.RolUserEntidad ?? "Admin";
+        entidad.Status = entidad.Status ??"Activa";
 
 
         ModalDisplay = "block;";
@@ -252,14 +262,6 @@
     {
         entidad.LimiteCredito = !string.IsNullOrEmpty(LimiteCredito) ? int.Parse(LimiteCredito) : 0;
         entidad.NumeroDocumento = !string.IsNullOrEmpty(NumeroDocumento) ? long.Parse(NumeroDocumento) : 0;
-        if (entidad.TipoEntidad == null)
-            entidad.TipoEntidad = "Física";
-        if (entidad.TipoDocumento == null)
-            entidad.TipoDocumento = "RNC";
-        if (entidad.RolUserEntidad == null)
-            entidad.RolUserEntidad = "Admin";
-        if (entidad.Status == null)
-            entidad.Status = "Activa";
 
         bool validationForm = entidad.NumeroDocumento == 0 || string.IsNullOrEmpty(entidad.Descripcion) || string.IsNullOrEmpty(entidad.Direccion)
                                 || string.IsNullOrEmpty(entidad.Localidad) || string.IsNullOrEmpty(entidad.Telefonos);
@@ -289,7 +291,13 @@
             {
                 Close();
                 await _js.InvokeVoidAsync("alert", "Se ha guardado la entidad con exito.");
+                var result2 = await _http.GetStringAsync("/api/Entidades/All");
+                if (!string.IsNullOrEmpty(result2))
+                {
+                    localStorage.Entidades = JsonConvert.DeserializeObject<List<Entidades>>(result2);
+                }
             }
         }
+
     }
 }

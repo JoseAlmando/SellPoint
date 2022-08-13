@@ -43,7 +43,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var entidad in Entidades)
+        @foreach (var entidad in localStorage.Entidades)
         {
             <tr>
                 <th class="vertical-align" scope="row">@entidad.IdEntidad</th>
@@ -71,7 +71,6 @@
 <FormEntidad @ref="Modal"></FormEntidad>
 
 @code {
-    private List<Entidades> Entidades = new();
     private string SearchTerm = "";
     private FormEntidad Modal { get; set; }
 
@@ -83,10 +82,19 @@
 
     public async Task GetEntities()
     {
-        var url = !string.IsNullOrEmpty(SearchTerm) ? $"/api/Entidades/All?SearchTermn={SearchTerm}" : "/api/Entidades/All";
-        var response = await _http.GetStringAsync(url);
-        if (!string.IsNullOrEmpty(response))
-            Entidades = JsonConvert.DeserializeObject<List<Entidades>>(response);
+        try
+        {
+            var url = !string.IsNullOrEmpty(SearchTerm) ? $"/api/Entidades/All?SearchTermn={SearchTerm}" : "/api/Entidades/All";
+            var response = await _http.GetStringAsync(url);
+            if (!string.IsNullOrEmpty(response))
+                localStorage.Entidades = JsonConvert.DeserializeObject<List<Entidades>>(response);
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+        
+        
     }
 
     private async Task DeleteEntidad(Entidades entidad)
