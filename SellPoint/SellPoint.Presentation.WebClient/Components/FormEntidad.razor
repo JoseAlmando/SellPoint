@@ -166,10 +166,10 @@
                         <div class="d-flex form-group m-3">
                             <label style="cursor: pointer;" for="check" class="m-3">¿Es eliminable?</label>
                             <input id="check"
-                                   type="checkbox"
-                                   class="form-check"
-                                   style="width: 20px; cursor: pointer;"
-                                   @bind="@entidad.NoEliminable"/>
+                               type="checkbox"
+                               class="form-check"
+                               style="width: 20px; cursor: pointer;"
+                               @bind="@entidad.NoEliminable" />
                         </div>
                     </div>
                 }
@@ -179,15 +179,15 @@
                         <div class="d-flex form-group m-3">
                             <label style="cursor: pointer;" for="check" class="m-3">¿Es eliminable?</label>
                             <input id="check"
-                                   type="checkbox"
-                                   checked = "checked"
-                                   class="form-check"
-                                   style="width: 20px; cursor: pointer;"
-                                   @onchange="@((e) => { entidad.NoEliminable=(bool)e.Value;})"/>
+                               type="checkbox"
+                               checked="checked"
+                               class="form-check"
+                               style="width: 20px; cursor: pointer;"
+                               @onchange="@((e) => { entidad.NoEliminable=(bool)e.Value;})" />
                         </div>
                     </div>
                 }
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" @onclick="Save">Guardar</button>
@@ -233,7 +233,7 @@
         entidad.TipoEntidad = entidad.TipoEntidad ?? "Física";
         entidad.TipoDocumento = entidad.TipoDocumento ?? "RNC";
         entidad.RolUserEntidad = entidad.RolUserEntidad ?? "Admin";
-        entidad.Status = entidad.Status ??"Activa";
+        entidad.Status = entidad.Status ?? "Activa";
 
 
         ModalDisplay = "block;";
@@ -257,7 +257,7 @@
         StateHasChanged();
     }
 
-    //Save or edit entity 
+    //Save or edit entity
     private async Task Save()
     {
         entidad.LimiteCredito = !string.IsNullOrEmpty(LimiteCredito) ? int.Parse(LimiteCredito) : 0;
@@ -277,7 +277,7 @@
             HttpResponseMessage result = null;
             if (!isUpdate)
                 result = await _http.PostAsync("/api/Entidades/Create", content);
-            else 
+            else
                 result = await _http.PutAsync("/api/Entidades/Update", content);
 
             var catchResult = await result.Content.ReadAsStringAsync();
@@ -298,6 +298,8 @@
                 }
             }
         }
+        StateHasChanged();
+
 
     }
 }
