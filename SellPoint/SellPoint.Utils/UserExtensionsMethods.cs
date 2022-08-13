@@ -25,7 +25,8 @@ namespace SellPoint.Utils
             return new UserDTO
             {
                 Username = user.UserNameEntidad,
-                PassWord = user.PasswordEntidad
+                PassWord = user.PasswordEntidad,
+                Id = user.Id
             };
         }
     }

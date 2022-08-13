@@ -26,8 +26,8 @@ namespace SellPoint.Presentation.API.Controllers
         {
             try
             {
-
-                var result = await _repoUser.FindWhere(x => x.UserNameEntidad == user.Username && x.PasswordEntidad == user.PassWord.Encrypt());
+                var passwordEncrypt = user.PassWord.Encrypt();
+                var result = await _repoUser.FindWhere(x => x.UserNameEntidad == user.Username && x.PasswordEntidad == passwordEncrypt);
                 if (result is null)
                 {
                     return NotFound();

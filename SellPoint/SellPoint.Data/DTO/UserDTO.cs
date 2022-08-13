@@ -8,7 +8,9 @@ namespace SellPoint.Data.DTO
 {
     public class UserDTO
     {
-        public string Username { get; set; }
+        public int Id { get; set; }
+
+        public string Username { get; set; } 
         public string PassWord { get; set; }
     }
 }

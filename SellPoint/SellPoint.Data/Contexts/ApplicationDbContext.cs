@@ -23,6 +23,14 @@ namespace SellPoint.Data.Contexts
 
         }
 
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasIndex(m => m.UserNameEntidad).IsUnique();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlServer("workstation id=SellPoint.mssql.somee.com;packet size=4096;user id=JoseAlmando_SQLLogin_1;pwd=z2k7m9iucm;data source=SellPoint.mssql.somee.com;persist security info=False;initial catalog=SellPoint",
             b => b.MigrationsAssembly("SellPoint.Presentation.API"));

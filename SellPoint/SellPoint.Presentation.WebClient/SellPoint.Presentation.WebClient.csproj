@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SellPoint.Data\SellPoint.Data.csproj" />
+    <ProjectReference Include="..\SellPoint.Utils\SellPoint.Utils.csproj" />
   </ItemGroup>
 
 </Project>
