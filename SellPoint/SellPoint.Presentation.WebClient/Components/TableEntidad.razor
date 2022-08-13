@@ -81,17 +81,26 @@
         StateHasChanged();
     }
 
-    private async Task GetEntities()
+    public async Task GetEntities()
     {
-        var url = SearchTerm != "" ? $"/api/Entidades/All?SearchTermn={SearchTerm}" : "/api/Entidades/All";
+        var url = !string.IsNullOrEmpty(SearchTerm) ? $"/api/Entidades/All?SearchTermn={SearchTerm}" : "/api/Entidades/All";
         var response = await _http.GetStringAsync(url);
         if (!string.IsNullOrEmpty(response))
             Entidades = JsonConvert.DeserializeObject<List<Entidades>>(response);
-        Console.WriteLine(Entidades);
     }
 
     private async Task DeleteEntidad(Entidades entidad)
     {
-        //NavManager.NavigateTo("/edit/" + book.Id);
+        var confirm = await _js.InvokeAsync<bool>("confirm", $"¿Desea eliminar la entidad {entidad.Descripcion}?");
+        if (confirm)
+        {
+            string url = $"/api/Entidades/Delete/{entidad.IdEntidad}";
+            var response = await _http.DeleteAsync(url);
+            var catchResult = await response.Content.ReadAsStringAsync();
+            if (JsonConvert.DeserializeObject<bool>(catchResult))
+                await _js.InvokeVoidAsync("alert", "Se ha Borrado la entidad con exito.");
+                await OnInitializedAsync();
+        }
+        
     }
 }

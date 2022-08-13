@@ -30,7 +30,7 @@ namespace SellPoint.Presentation.API.Controllers
             {
                 SearchTermn = SearchTermn == null ? string.Empty : SearchTermn.Trim();
                 var result = await _repoEntidades.GetList(
-                    v => v.Descripcion.Contains(SearchTermn) || v.User.UserNameEntidad.Contains(SearchTermn), 
+                    v => v.Descripcion.Contains(SearchTermn) || v.User.UserNameEntidad.Contains(SearchTermn),
                     x => x.User);
                 return Ok(result);
             }
@@ -134,7 +134,7 @@ namespace SellPoint.Presentation.API.Controllers
             }
         }
 
-        [HttpDelete("Delete")]
+        [HttpDelete("Delete/{Id:int}")]
         public async Task<IActionResult> Delete(int Id)
         {
             try
