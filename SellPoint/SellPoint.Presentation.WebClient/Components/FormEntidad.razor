@@ -242,6 +242,7 @@
             entidad = ExtensionsMethods.Map<Entidades, EntidadesDTO>(_entidad);
             LimiteCredito = entidad.LimiteCredito.ToString();
             NumeroDocumento = entidad.NumeroDocumento.ToString();
+            
         }
         else
         {
@@ -319,6 +320,7 @@
                 if (!string.IsNullOrEmpty(result2))
                 {
                     localStorage.Entidades = JsonConvert.DeserializeObject<List<Entidades>>(result2);
+                    NavManager.NavigateTo("/user/1");
                 }
             }
         }
