@@ -12,6 +12,8 @@
     }
 </style>
 
+<h3 id="message">Bienvenido</h3>
+
 <button class="btn btn-danger" @onclick="() => Modal.Open()">
     Agregar Entidad
 </button>
@@ -89,12 +91,12 @@
             if (!string.IsNullOrEmpty(response))
                 localStorage.Entidades = JsonConvert.DeserializeObject<List<Entidades>>(response);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine(e.ToString());
         }
-        
-        
+
+
     }
 
     private async Task DeleteEntidad(Entidades entidad)
@@ -107,8 +109,8 @@
             var catchResult = await response.Content.ReadAsStringAsync();
             if (JsonConvert.DeserializeObject<bool>(catchResult))
                 await _js.InvokeVoidAsync("alert", "Se ha Borrado la entidad con exito.");
-                await OnInitializedAsync();
+            await OnInitializedAsync();
         }
-        
+
     }
 }

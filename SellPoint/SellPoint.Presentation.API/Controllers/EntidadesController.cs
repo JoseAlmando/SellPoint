@@ -55,7 +55,7 @@ namespace SellPoint.Presentation.API.Controllers
                     Localidad = entidad.Localidad,
                     TipoEntidad = entidad.TipoEntidad,
                     TipoDocumento = entidad.TipoDocumento,
-                    NumeroDocumento = entidad.NumeroDocumento,
+                    NumeroDocumento = entidad.NumeroDocumento ?? 0L,
                     Telefonos = entidad.Telefonos,
                     URLPaginaWeb = entidad.URLPaginaWeb,
                     URLFacebook = entidad.URLFacebook,
@@ -64,11 +64,11 @@ namespace SellPoint.Presentation.API.Controllers
                     URLTiktok = entidad.URLTiktok,
                     CodPostal = entidad.CodPostal,
                     CoordenadasGPS = entidad.CoordenadasGPS,
-                    LimiteCredito = entidad.LimiteCredito,
+                    LimiteCredito = entidad.LimiteCredito ?? 0D,
                     RolUserEntidad = entidad.RolUserEntidad,
                     Comentario = entidad.Comentario,
                     Status = entidad.Status,
-                    NoEliminable = entidad.NoEliminable,
+                    NoEliminable = entidad.NoEliminable ?? true,
                     User = user
                 };
 
@@ -104,7 +104,7 @@ namespace SellPoint.Presentation.API.Controllers
                         Localidad = entidad.Localidad,
                         TipoEntidad = entidad.TipoEntidad,
                         TipoDocumento = entidad.TipoDocumento,
-                        NumeroDocumento = entidad.NumeroDocumento,
+                        NumeroDocumento = entidad.NumeroDocumento ?? 0L,
                         Telefonos = entidad.Telefonos,
                         URLPaginaWeb = entidad.URLPaginaWeb,
                         URLFacebook = entidad.URLFacebook,
@@ -113,11 +113,11 @@ namespace SellPoint.Presentation.API.Controllers
                         URLTiktok = entidad.URLTiktok,
                         CodPostal = entidad.CodPostal,
                         CoordenadasGPS = entidad.CoordenadasGPS,
-                        LimiteCredito = entidad.LimiteCredito,
+                        LimiteCredito = entidad.LimiteCredito ?? 0L,
                         RolUserEntidad = entidad.RolUserEntidad,
                         Comentario = entidad.Comentario,
                         Status = entidad.Status,
-                        NoEliminable = entidad.NoEliminable,
+                        NoEliminable = entidad.NoEliminable ?? true,
                         User = user
                     };
                     var UpdatedRow = await _repoEntidades.Update(UpdateEntidad);

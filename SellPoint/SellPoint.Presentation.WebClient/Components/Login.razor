@@ -25,16 +25,21 @@ else
         <div class="d-flex flex-column w-25 mt-5">
             <h3 class="text-center mb-3">Login</h3>
             <input type="text" class="form-control p-2 w-100 mb-2"
-               id="exampleFormControlInput1"
-               placeholder="Usuario"
+                   id="username"
+                   placeholder="Usuario"
                @bind="@user.Username" />
             <input type="password" class="form-control p-2 w-100 mb-3"
-               id="exampleFormControlInput1"
-               placeholder="Contraseña"
+                   id="password"
+                   placeholder="Contraseña"
                @bind="@user.PassWord" />
-            <button type="button" @onclick="LogIn" class="btn btn-success w-100">Iniciar Sesion</button>
+            <button type="button" id="btnLogin" @onclick="LogIn" class="btn btn-success w-100">Iniciar Sesion</button>
         </div>
     </form>
+
+    @if (message != null)
+    {
+        <p id="message">  @message </p>
+    }
 
     @if (isLoading)
     {
@@ -52,6 +57,7 @@ else
     private bool existUser = true;
     private bool isLoading;
     private UserDTO user = new UserDTO();
+    private string message = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,7 +69,7 @@ else
         isLoading = true;
         if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.PassWord))
         {
-            await _js.InvokeVoidAsync("alert", "El usuario y contraseña son necesarios...");
+            message = "El usuario y contraseña son necesarios...";
         }
         else
         {
@@ -78,7 +84,7 @@ else
                 var response = JsonConvert.DeserializeObject<User>(await result.Content.ReadAsStringAsync());
                 if (response is null || response.Id == 0)
                 {
-                    await _js.InvokeVoidAsync("alert", "El usuario y/o contraseña son incorrectos...");
+                    message = "El usuario y/o contraseña son incorrectos...";
                 }
                 else
                 {
@@ -93,11 +99,11 @@ else
                 var response = JsonConvert.DeserializeObject<User>(await result.Content.ReadAsStringAsync());
                 if (result.StatusCode != HttpStatusCode.OK)
                 {
-                    await _js.InvokeVoidAsync("alert", "Error al crear el usuario.");
+                    message =  "Error al crear el usuario.";
                 }
                 else
                 {
-                    await _js.InvokeVoidAsync("alert", "Usuario creado con exito");
+                    message = "Usuario creado con exito"; 
 
                     localStorage.user = response;
                     NavManager.NavigateTo("/home");
@@ -121,7 +127,7 @@ else
             if (!existUser)
             {
 
-                await _js.InvokeVoidAsync("alert", "No existen usuarios. El usuario que escriba a continuacion sera su usuario principal.");
+              message = "No existen usuarios. El usuario que escriba a continuacion sera su usuario principal.";
             }
         }
         catch
